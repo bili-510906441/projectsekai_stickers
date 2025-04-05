@@ -5,10 +5,10 @@ from PIL import Image, ImageTk, ImageDraw, ImageFont
 import psutil
 import pyautogui
 
-class MemeGeneratorApp:
+class PJSKStickerMakerApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("表情包生成器 v1.0")
+        self.root.title("PJSK表情包生成器 v1.0")
         self.root.geometry("750x400")
         self.root.resizable(False, False)
         
@@ -16,11 +16,10 @@ class MemeGeneratorApp:
         self.image_dir = "./data/stickers"
         self.font_dir = "./data/fonts"
         
-        # 初始化文件结构
+        # 初始化文件结构和变量
         self.characters = self.load_characters()
         self.font_files = self.load_fonts()
         
-        # 初始化变量
         self.original_image = None
         self.text_content = tk.StringVar()
         self.font_size = tk.IntVar(value=40)
@@ -170,7 +169,7 @@ class MemeGeneratorApp:
         ttk.Label(pos_frame, text=",").pack(side=tk.LEFT)
         ttk.Entry(pos_frame, textvariable=self.pos_y, width=5).pack(side=tk.LEFT)
 
-        # 操作按钮 (修改后)
+        # 操作按钮
         row += 1
         btn_frame = ttk.Frame(control_frame)
         btn_frame.grid(row=row, column=0, columnspan=3, pady=10, sticky=tk.EW)
@@ -347,7 +346,7 @@ class MemeGeneratorApp:
             # 计算位置
             x, y = self.pos_x.get(), self.pos_y.get()
             
-            # 绘制文本（带旋转）
+            # 绘制文本
             text_draw.text(
                 (x, y), text,
                 font=font,
@@ -364,7 +363,7 @@ class MemeGeneratorApp:
             # 合并图层
             img.paste(rotated, (0, 0), rotated)
             
-            # 生成带边框的预览
+            # 生成预览
             preview = img.copy()
             preview.thumbnail((600, 600))
             border_draw = ImageDraw.Draw(preview)
@@ -390,7 +389,6 @@ class MemeGeneratorApp:
             return
         
         try:
-            # 使用与预览相同的渲染逻辑
             img = self.original_image.copy()
             draw = ImageDraw.Draw(img)
             
@@ -432,7 +430,7 @@ class MemeGeneratorApp:
 if __name__ == "__main__":
     root = tk.Tk()
     try:
-        app = MemeGeneratorApp(root)
+        app = PJSKStickerMakerApp(root)
         root.mainloop()
     except Exception as e:
         messagebox.showerror("致命错误", f"程序崩溃: {str(e)}")
